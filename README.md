@@ -18,3 +18,11 @@ __Date:__ March 6, 2014
 __Presentation:__ 
 
 ***
+
+##Design Patterns
+
+__Title:__ Singleton Design Pattern
+
+__Date:__ March 10, 104
+
+__Presentation:__ http://slid.es/aaanim/singleton-pattern
