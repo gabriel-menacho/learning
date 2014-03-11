@@ -2,15 +2,15 @@ package com.xtime.learning.patterns.singleton;
 
 public class VehicleInterface01
 {
-    private static VehicleInterface instance = new VehicleInterface();
+    private static VehicleInterface01 instance = new VehicleInterface01();
 
     private int speed = 0;
 
     private boolean running = false;
 
-    private VehicleInterface02() {}
+    private VehicleInterface01() {}
 
-    public VehicleInterface getInstance()
+    public static VehicleInterface01 getInstance()
     {
         return instance;
     }
@@ -23,7 +23,7 @@ public class VehicleInterface01
     {
     }
 
-    public accelerate(int factor)
+    public void accelerate(int factor)
     {
     }
 

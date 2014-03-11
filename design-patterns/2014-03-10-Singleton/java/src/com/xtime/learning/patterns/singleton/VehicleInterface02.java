@@ -2,7 +2,7 @@ package com.xtime.learning.patterns.singleton;
 
 public class VehicleInterface02
 {
-    private static VehicleInterface instance = null;
+    private static VehicleInterface02 instance = null;
 
     private int speed = 0;
 
@@ -10,7 +10,7 @@ public class VehicleInterface02
 
     private VehicleInterface02() {}
 
-    public synchronized VehicleInterface02 getInstance()
+    public static synchronized VehicleInterface02 getInstance()
     {
         if (instance == null)
         {
@@ -20,19 +20,16 @@ public class VehicleInterface02
         return instance;
     }
 
+    public int getSpeed()
+    {
+        return this.speed;
+    }
+    
     public void startEngine()
     {
-        task = new Thread(new Runable()
-        {
-            public void run ()
-            {
-                while (!Thread.currentThread().isInterrupted())
-                {
-                    System.out.println("Vehicle engine running at: " + this.speed);
-                }
-            }
-        })
-
+        final int speed = getSpeed();
+        task = new Thread(new DisplaySpeed(this));
+        task.start();
     }
 
     public void stopEngine()
@@ -43,11 +40,29 @@ public class VehicleInterface02
         System.out.println("Vehicle engine stopped");
     }
 
-    public accelerate(int factor)
+    public void accelerate(int factor)
     {
-        this.speed += factor;
+        speed += factor;
     }
 
+    private static class DisplaySpeed implements Runnable
+    {
+        private VehicleInterface02 vi;
+        
+        public DisplaySpeed(VehicleInterface02 vi)
+        {
+            this.vi = vi;
+        }
+        
+        public void run()
+        {
+            while (!Thread.currentThread().isInterrupted())
+            {
+                System.out.println("Vehicle engine running at: " + vi.getSpeed());
+            }
+        }
+    }
+    
     public static void main(String... args) throws Exception
     {
         VehicleInterface02 instance1 = VehicleInterface02.getInstance();
@@ -59,10 +74,10 @@ public class VehicleInterface02
 
         Thread.sleep(5000);
 
-        instance.accelerate(55);
+        instance2.accelerate(55);
 
         Thread.sleep(4000);
 
-        instance.stopEngine();
+        instance1.stopEngine();
     }
 }
