@@ -26,3 +26,11 @@ __Title:__ Singleton Design Pattern
 __Date:__ March 10, 104
 
 __Presentation:__ http://slid.es/aaanim/singleton-pattern
+
+***
+
+__Title:__ Factory Method Pattern
+
+__Date:__ March 11, 2014
+
+__Presentation:__ https://docs.google.com/presentation/d/19q7iwAMKNsn0Wmi2cMHix9guWi6mIrqhkeEOdkxhpJs/edit?usp=sharing
