@@ -1,12 +1,16 @@
 package com.xtime.learning.patterns.singleton;
 
+import java.util.concurrent.*;
+
 public class VehicleInterface02
 {
     private static VehicleInterface02 instance = null;
 
     private int speed = 0;
 
-    private Thread task;
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    
+    private ScheduledFuture display;
 
     private VehicleInterface02() {}
 
@@ -27,16 +31,13 @@ public class VehicleInterface02
     
     public void startEngine()
     {
-        final int speed = getSpeed();
-        task = new Thread(new DisplaySpeed(this));
-        task.start();
+        display = scheduler.scheduleAtFixedRate(new DisplaySpeed(this), 1, 1, TimeUnit.SECONDS);
     }
 
     public void stopEngine()
     {
-        if (task != null)
-            task.interrupt();
-
+        display.cancel(true);
+        
         System.out.println("Vehicle engine stopped");
     }
 
@@ -56,10 +57,7 @@ public class VehicleInterface02
         
         public void run()
         {
-            while (!Thread.currentThread().isInterrupted())
-            {
-                System.out.println("Vehicle engine running at: " + vi.getSpeed());
-            }
+            System.out.println("Vehicle engine running at: " + vi.getSpeed());
         }
     }
     
